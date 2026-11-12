@@ -1,13 +1,10 @@
 export const PAGES_NEW = [
-  "/create",
-  "/docs/components/button-group",
-  "/docs/components/empty",
-  "/docs/components/field",
-  "/docs/components/input-group",
-  "/docs/components/item",
-  "/docs/components/kbd",
-  "/docs/components/spinner",
-  "/docs/components/native-select",
+  "/docs/components/radix/trace",
+  "/docs/components/base/trace",
+  "/docs/components/aria/trace",
+  "/docs/components/radix/code-block",
+  "/docs/components/base/code-block",
+  "/docs/components/aria/code-block",
 ]
 
-export const PAGES_UPDATED = ["/docs/components/button"]
+export const PAGES_UPDATED = []

@@ -1,10 +1,8 @@
 "use client"
 
 import * as React from "react"
+import { cn } from "cn"
 import { RadioGroup as RadioGroupPrimitive } from "radix-ui"
-
-import { cn } from "@/registry/bases/radix/lib/utils"
-import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 
 function RadioGroup({
   className,
@@ -36,13 +34,7 @@ function RadioGroupItem({
         data-slot="radio-group-indicator"
         className="cn-radio-group-indicator"
       >
-        <IconPlaceholder
-          lucide="CircleIcon"
-          tabler="IconCircle"
-          hugeicons="CircleIcon"
-          phosphor="CircleIcon"
-          className="cn-radio-group-indicator-icon"
-        />
+        <span className="cn-radio-group-indicator-icon" />
       </RadioGroupPrimitive.Indicator>
     </RadioGroupPrimitive.Item>
   )

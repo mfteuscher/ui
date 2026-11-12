@@ -1,10 +1,10 @@
 "use client"
 
 import * as React from "react"
-import { type PopoverProps } from "@radix-ui/react-popover"
+import { cn } from "cn"
 import { Check, ChevronsUpDown } from "lucide-react"
+import type { Popover as PopoverPrimitive } from "radix-ui"
 
-import { cn } from "@/lib/utils"
 import { Button } from "@/registry/new-york-v4/ui/button"
 import {
   Command,
@@ -23,7 +23,8 @@ import {
 
 import { type Preset } from "../data/presets"
 
-interface PresetSelectorProps extends PopoverProps {
+interface PresetSelectorProps
+  extends React.ComponentProps<typeof PopoverPrimitive.Root> {
   presets: Preset[]
 }
 

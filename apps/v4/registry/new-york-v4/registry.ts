@@ -1,5 +1,4 @@
 import { registryItemSchema, type Registry } from "shadcn/schema"
-import { z } from "zod"
 
 import { themes } from "../_legacy-themes"
 import { blocks } from "./blocks/_registry"
@@ -22,9 +21,21 @@ const DEPRECATED_ITEMS = [
 // Shared between index and style for backward compatibility.
 const NEW_YORK_V4_STYLE = {
   type: "registry:style",
-  dependencies: ["class-variance-authority", "lucide-react"],
-  devDependencies: ["tw-animate-css"],
+  dependencies: ["class-variance-authority", "cn", "lucide-react", "radix-ui"],
+  devDependencies: ["tw-animate-css", "shadcn"],
   registryDependencies: ["utils"],
+  css: {
+    '@import "tw-animate-css"': {},
+    '@import "shadcn/tailwind.css"': {},
+    "@layer base": {
+      "*": {
+        "@apply border-border outline-ring/50": {},
+      },
+      body: {
+        "@apply bg-background text-foreground": {},
+      },
+    },
+  },
   cssVars: {},
   files: [],
 }
@@ -32,7 +43,7 @@ const NEW_YORK_V4_STYLE = {
 export const registry = {
   name: "shadcn/ui",
   homepage: "https://ui.shadcn.com",
-  items: z.array(registryItemSchema).parse(
+  items: registryItemSchema.array().parse(
     [
       {
         name: "index",

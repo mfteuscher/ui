@@ -2,9 +2,7 @@
 
 import { Radio as RadioPrimitive } from "@base-ui/react/radio"
 import { RadioGroup as RadioGroupPrimitive } from "@base-ui/react/radio-group"
-
-import { cn } from "@/registry/bases/base/lib/utils"
-import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
+import { cn } from "cn"
 
 function RadioGroup({ className, ...props }: RadioGroupPrimitive.Props) {
   return (
@@ -30,13 +28,7 @@ function RadioGroupItem({ className, ...props }: RadioPrimitive.Root.Props) {
         data-slot="radio-group-indicator"
         className="cn-radio-group-indicator"
       >
-        <IconPlaceholder
-          lucide="CircleIcon"
-          tabler="IconCircle"
-          hugeicons="CircleIcon"
-          phosphor="CircleIcon"
-          className="cn-radio-group-indicator-icon"
-        />
+        <span className="cn-radio-group-indicator-icon" />
       </RadioPrimitive.Indicator>
     </RadioPrimitive.Root>
   )

@@ -1,8 +1,8 @@
 import * as React from "react"
 import { mergeProps } from "@base-ui/react/merge-props"
 import { useRender } from "@base-ui/react/use-render"
+import { cn } from "cn"
 
-import { cn } from "@/registry/bases/base/lib/utils"
 import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 
 function Breadcrumb({ className, ...props }: React.ComponentProps<"nav">) {
@@ -21,7 +21,7 @@ function BreadcrumbList({ className, ...props }: React.ComponentProps<"ol">) {
     <ol
       data-slot="breadcrumb-list"
       className={cn(
-        "cn-breadcrumb-list flex flex-wrap items-center break-words",
+        "cn-breadcrumb-list flex flex-wrap items-center wrap-break-word",
         className
       )}
       {...props}
@@ -91,6 +91,8 @@ function BreadcrumbSeparator({
           tabler="IconChevronRight"
           hugeicons="ArrowRight01Icon"
           phosphor="CaretRightIcon"
+          remixicon="RiArrowRightSLine"
+          className="cn-rtl-flip"
         />
       )}
     </li>
@@ -117,6 +119,7 @@ function BreadcrumbEllipsis({
         tabler="IconDots"
         hugeicons="MoreHorizontalCircle01Icon"
         phosphor="DotsThreeIcon"
+        remixicon="RiMoreLine"
       />
       <span className="sr-only">More</span>
     </span>

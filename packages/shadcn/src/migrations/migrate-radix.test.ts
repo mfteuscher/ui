@@ -20,7 +20,7 @@ vi.mock("prompts", () => ({
   default: vi.fn(),
 }))
 
-vi.mock("@/src/utils/spinner", () => ({
+vi.mock("@shadcn/registry/internal/spinner", () => ({
   spinner: vi.fn(() => ({
     start: vi.fn().mockReturnThis(),
     succeed: vi.fn(),
@@ -29,7 +29,7 @@ vi.mock("@/src/utils/spinner", () => ({
   })),
 }))
 
-vi.mock("@/src/utils/logger", () => ({
+vi.mock("@shadcn/registry/internal/logger", () => ({
   logger: {
     info: vi.fn(),
     warn: vi.fn(),
@@ -37,15 +37,15 @@ vi.mock("@/src/utils/logger", () => ({
   },
 }))
 
-vi.mock("@/src/utils/get-package-manager", () => ({
+vi.mock("@shadcn/registry/internal/get-package-manager", () => ({
   getPackageManager: vi.fn(),
 }))
 
-vi.mock("@/src/utils/get-package-info", () => ({
+vi.mock("@shadcn/registry/internal/get-package-info", () => ({
   getPackageInfo: vi.fn(),
 }))
 
-vi.mock("@/src/utils/updaters/update-dependencies", () => ({
+vi.mock("@shadcn/registry/internal/updaters/update-dependencies", () => ({
   updateDependencies: vi.fn(),
 }))
 
@@ -888,10 +888,13 @@ describe("migrateRadix - package.json updates", () => {
       },
     }
 
+    // Old packages should remain - we don't remove them automatically.
     const expectedPackageJson = {
       name: "test-project",
       dependencies: {
         react: "^18.0.0",
+        "@radix-ui/react-dialog": "^1.0.0",
+        "@radix-ui/react-select": "^1.0.0",
         "other-package": "^1.0.0",
         "radix-ui": "latest",
       },
@@ -901,7 +904,9 @@ describe("migrateRadix - package.json updates", () => {
     }
 
     // Mock package info
-    const { getPackageInfo } = await import("@/src/utils/get-package-info")
+    const { getPackageInfo } = await import(
+      "@shadcn/registry/internal/get-package-info"
+    )
     vi.mocked(getPackageInfo).mockReturnValue(mockPackageJson)
 
     // Mock file system
@@ -926,7 +931,7 @@ describe("migrateRadix - package.json updates", () => {
 
     // Mock package manager detection
     const { getPackageManager } = await import(
-      "@/src/utils/get-package-manager"
+      "@shadcn/registry/internal/get-package-manager"
     )
     vi.mocked(getPackageManager).mockResolvedValue("npm")
 
@@ -947,11 +952,13 @@ describe("migrateRadix - package.json updates", () => {
       },
     }
 
-    const { getPackageInfo } = await import("@/src/utils/get-package-info")
+    const { getPackageInfo } = await import(
+      "@shadcn/registry/internal/get-package-info"
+    )
     vi.mocked(getPackageInfo).mockReturnValue(mockPackageJson)
 
     const { updateDependencies } = await import(
-      "@/src/utils/updaters/update-dependencies"
+      "@shadcn/registry/internal/updaters/update-dependencies"
     )
 
     const fg = await import("fast-glob")
@@ -976,7 +983,9 @@ describe("migrateRadix - package.json updates", () => {
   })
 
   it("should handle missing package.json gracefully", async () => {
-    const { getPackageInfo } = await import("@/src/utils/get-package-info")
+    const { getPackageInfo } = await import(
+      "@shadcn/registry/internal/get-package-info"
+    )
     vi.mocked(getPackageInfo).mockReturnValue(null)
 
     const fg = await import("fast-glob")
@@ -1000,11 +1009,13 @@ describe("migrateRadix - package.json updates", () => {
       },
     }
 
-    const { getPackageInfo } = await import("@/src/utils/get-package-info")
+    const { getPackageInfo } = await import(
+      "@shadcn/registry/internal/get-package-info"
+    )
     vi.mocked(getPackageInfo).mockReturnValue(mockPackageJson)
 
     const { updateDependencies } = await import(
-      "@/src/utils/updaters/update-dependencies"
+      "@shadcn/registry/internal/updaters/update-dependencies"
     )
 
     mockFs.writeFile.mockResolvedValue(undefined)
@@ -1030,33 +1041,38 @@ describe("migrateRadix - package.json updates", () => {
     )
   })
 
-  it("should only remove packages that were found in source files", async () => {
+  it("should not remove old @radix-ui packages from package.json", async () => {
     const mockPackageJson = {
       name: "test-project",
       dependencies: {
         react: "^18.0.0",
         "@radix-ui/react-dialog": "^1.0.0",
         "@radix-ui/react-select": "^1.0.0",
-        "@radix-ui/react-toast": "^1.0.0", // This one is NOT in source files
+        "@radix-ui/react-toast": "^1.0.0",
         "other-package": "^1.0.0",
       },
     }
 
+    // Old packages should remain - we don't remove them automatically.
     const expectedPackageJson = {
       name: "test-project",
       dependencies: {
         react: "^18.0.0",
-        "@radix-ui/react-toast": "^1.0.0", // Should remain since not found in source
+        "@radix-ui/react-dialog": "^1.0.0",
+        "@radix-ui/react-select": "^1.0.0",
+        "@radix-ui/react-toast": "^1.0.0",
         "other-package": "^1.0.0",
         "radix-ui": "latest",
       },
     }
 
-    const { getPackageInfo } = await import("@/src/utils/get-package-info")
+    const { getPackageInfo } = await import(
+      "@shadcn/registry/internal/get-package-info"
+    )
     vi.mocked(getPackageInfo).mockReturnValue(mockPackageJson)
 
     const { getPackageManager } = await import(
-      "@/src/utils/get-package-manager"
+      "@shadcn/registry/internal/get-package-manager"
     )
     vi.mocked(getPackageManager).mockResolvedValue("npm")
 
@@ -1084,32 +1100,36 @@ describe("migrateRadix - package.json updates", () => {
     )
   })
 
-  it("should not remove @radix-ui/react-icons from package.json", async () => {
+  it("should keep @radix-ui/react-icons and other packages in package.json", async () => {
     const mockPackageJson = {
       name: "test-project",
       dependencies: {
         react: "^18.0.0",
         "@radix-ui/react-dialog": "^1.0.0",
-        "@radix-ui/react-icons": "^1.3.0", // Should NOT be removed
+        "@radix-ui/react-icons": "^1.3.0",
         "other-package": "^1.0.0",
       },
     }
 
+    // Old packages should remain - we don't remove them automatically.
     const expectedPackageJson = {
       name: "test-project",
       dependencies: {
         react: "^18.0.0",
-        "@radix-ui/react-icons": "^1.3.0", // Should remain
+        "@radix-ui/react-dialog": "^1.0.0",
+        "@radix-ui/react-icons": "^1.3.0",
         "other-package": "^1.0.0",
         "radix-ui": "latest",
       },
     }
 
-    const { getPackageInfo } = await import("@/src/utils/get-package-info")
+    const { getPackageInfo } = await import(
+      "@shadcn/registry/internal/get-package-info"
+    )
     vi.mocked(getPackageInfo).mockReturnValue(mockPackageJson)
 
     const { getPackageManager } = await import(
-      "@/src/utils/get-package-manager"
+      "@shadcn/registry/internal/get-package-manager"
     )
     vi.mocked(getPackageManager).mockResolvedValue("npm")
 

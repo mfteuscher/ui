@@ -1,9 +1,8 @@
 "use client"
 
 import * as React from "react"
+import { cn } from "cn"
 import { Avatar as AvatarPrimitive } from "radix-ui"
-
-import { cn } from "@/registry/bases/radix/lib/utils"
 
 function Avatar({
   className,
@@ -17,7 +16,7 @@ function Avatar({
       data-slot="avatar"
       data-size={size}
       className={cn(
-        "cn-avatar after:border-border group/avatar relative flex shrink-0 select-none after:absolute after:inset-0 after:border after:mix-blend-darken dark:after:mix-blend-lighten",
+        "cn-avatar group/avatar relative flex shrink-0 select-none after:absolute after:inset-0 after:border after:border-border after:mix-blend-darken dark:after:mix-blend-lighten",
         className
       )}
       {...props}
@@ -78,7 +77,7 @@ function AvatarGroup({ className, ...props }: React.ComponentProps<"div">) {
     <div
       data-slot="avatar-group"
       className={cn(
-        "cn-avatar-group *:data-[slot=avatar]:ring-background group/avatar-group flex -space-x-2 *:data-[slot=avatar]:ring-2",
+        "cn-avatar-group group/avatar-group flex -space-x-2 *:data-[slot=avatar]:ring-2 *:data-[slot=avatar]:ring-background",
         className
       )}
       {...props}
@@ -94,7 +93,7 @@ function AvatarGroupCount({
     <div
       data-slot="avatar-group-count"
       className={cn(
-        "cn-avatar-group-count ring-background relative flex shrink-0 items-center justify-center ring-2",
+        "cn-avatar-group-count relative flex shrink-0 items-center justify-center ring-2 ring-background",
         "",
         className
       )}

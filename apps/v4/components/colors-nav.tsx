@@ -2,9 +2,9 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import { cn } from "cn"
 
 import { getColors } from "@/lib/colors"
-import { cn } from "@/lib/utils"
 import { ScrollArea, ScrollBar } from "@/registry/new-york-v4/ui/scroll-area"
 
 export function ColorsNav({
@@ -27,7 +27,7 @@ export function ColorsNav({
                 (index === 0 && pathname === "/colors")
               }
               className={cn(
-                "text-muted-foreground hover:text-primary data-[active=true]:text-primary flex h-7 items-center justify-center px-4 text-center text-base font-medium capitalize transition-colors"
+                "flex h-7 items-center justify-center px-4 text-center text-base font-medium text-muted-foreground capitalize transition-colors hover:text-primary data-[active=true]:text-primary"
               )}
             >
               {colorPalette.name}

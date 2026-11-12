@@ -1,9 +1,9 @@
 "use client"
 
 import * as React from "react"
+import { cn } from "cn"
 import { Checkbox as CheckboxPrimitive } from "radix-ui"
 
-import { cn } from "@/registry/bases/radix/lib/utils"
 import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
 
 function Checkbox({
@@ -28,6 +28,7 @@ function Checkbox({
           tabler="IconCheck"
           hugeicons="Tick02Icon"
           phosphor="CheckIcon"
+          remixicon="RiCheckLine"
         />
       </CheckboxPrimitive.Indicator>
     </CheckboxPrimitive.Root>

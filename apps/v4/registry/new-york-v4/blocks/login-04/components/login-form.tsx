@@ -1,4 +1,5 @@
-import { cn } from "@/registry/new-york-v4/lib/utils"
+import { cn } from "cn"
+
 import { Button } from "@/registry/new-york-v4/ui/button"
 import { Card, CardContent } from "@/registry/new-york-v4/ui/card"
 import {
@@ -22,7 +23,7 @@ export function LoginForm({
             <FieldGroup>
               <div className="flex flex-col items-center gap-2 text-center">
                 <h1 className="text-2xl font-bold">Welcome back</h1>
-                <p className="text-muted-foreground text-balance">
+                <p className="text-balance text-muted-foreground">
                   Login to your Acme Inc account
                 </p>
               </div>
@@ -87,7 +88,7 @@ export function LoginForm({
               </FieldDescription>
             </FieldGroup>
           </form>
-          <div className="bg-muted relative hidden md:block">
+          <div className="relative hidden bg-muted md:block">
             <img
               src="/placeholder.svg"
               alt="Image"

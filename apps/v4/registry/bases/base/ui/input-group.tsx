@@ -2,8 +2,8 @@
 
 import * as React from "react"
 import { cva, type VariantProps } from "class-variance-authority"
+import { cn } from "cn"
 
-import { cn } from "@/registry/bases/base/lib/utils"
 import { Button } from "@/registry/bases/base/ui/button"
 import { Input } from "@/registry/bases/base/ui/input"
 import { Textarea } from "@/registry/bases/base/ui/textarea"
@@ -64,7 +64,7 @@ function InputGroupAddon({
 }
 
 const inputGroupButtonVariants = cva(
-  "cn-input-group-button shadow-none flex items-center",
+  "cn-input-group-button flex items-center shadow-none",
   {
     variants: {
       size: {
